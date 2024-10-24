@@ -82,4 +82,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## Contato
 
-Para dúvidas ou sugestões, entre em contato via [email@exemplo.com](mailto:albsondev@outlook.com).
+Para dúvidas ou sugestões, entre em contato via [albsondev@outlook.com](mailto:albsondev@outlook.com).
