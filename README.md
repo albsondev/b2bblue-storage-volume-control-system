@@ -7,7 +7,7 @@ Este projeto é um sistema de controle de volume de armazenamento de resíduos d
 
 ## Visão Geral do Projeto
 
-- **Tecnologias Utilizadas:** React, TypeScript, Material UI, Axios, React Toastify
+- **Tecnologias Utilizadas:** React.js, TypeScript, Material UI, Axios e Sweetalert2
 - **Funcionalidades:** 
   - Monitoramento do volume de armazenamento das estações
   - Geração automática de pedidos de coleta
@@ -53,10 +53,10 @@ Este projeto é um sistema de controle de volume de armazenamento de resíduos d
 
 ## Scripts Disponíveis
 
-- `yarn start`: Inicia o servidor de desenvolvimento.
-- `yarn build`: Cria a versão de produção do aplicativo.
-- `yarn test`: Executa testes.
-- `yarn eject`: Eject do projeto para configuração personalizada.
+- `yarn start` ou `npm start`: Inicia o servidor de desenvolvimento.
+- `yarn build` ou `npm build`: Cria a versão de produção do aplicativo.
+- `yarn test` ou `npm test`: Executa testes.
+- `yarn eject` ou `npm eject`: Eject do projeto para configuração personalizada.
 
 ## Como Funciona
 
