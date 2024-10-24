@@ -1,0 +1,14 @@
+$primary-color: #d7edf7;
+$primary-text: #046ec4;
+
+body {
+  background-color: $primary-color;
+  color: $primary-text;
+}
+
+.container {
+  & .divider-container {
+    margin-bottom: 1.5em;
+    margin-top: 1.5em;
+  }
+}
