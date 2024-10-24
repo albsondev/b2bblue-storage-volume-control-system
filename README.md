@@ -1,46 +1,85 @@
-# Getting Started with Create React App
+# Sistema de Controle de Volume de Armazenamento
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é um sistema de controle de volume de armazenamento de resíduos desenvolvido como **parte de um desafio da B2Blue**.
 
-## Available Scripts
 
-In the project directory, you can run:
+    O objetivo é monitorar o volume de três estações de armazenamento e gerar pedidos de coleta automaticamente quando estiverem 80% ocupadas.
 
-### `npm start`
+## Visão Geral do Projeto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Tecnologias Utilizadas:** React, TypeScript, Material UI, Axios, React Toastify
+- **Funcionalidades:** 
+  - Monitoramento do volume de armazenamento das estações
+  - Geração automática de pedidos de coleta
+  - Confirmação de coleta e redefinição de volume
+  - Feedback visual para ações do usuário
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Estrutura do Projeto
 
-### `npm test`
+- `src/`
+  - `components/`: Contém componentes React como `Dashboard` e `Station`.
+  - `services/`: Contém lógica de interação com dados simulada por `stationService.ts`.
+  - `types/`: Define tipos TypeScript para garantir robustez do código.
+  - `App.tsx`: Componente raiz que integra todos os outros componentes.
+  - `index.tsx`: Ponto de entrada do aplicativo.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Requisitos
 
-### `npm run build`
+- **Node.js**: Certifique-se de que você tem a versão LTS do Node.js instalada (recomendado v16.x).
+- **Yarn**: Utilizado para gerenciamento de pacotes.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Configuração do Ambiente
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone o repositório:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   git clone https://github.com/albsondev/b2blue-storage-volume-control-system.git
+   cd b2blue-storage-volume-control-system
+   ```
 
-### `npm run eject`
+2. **Instale as dependências:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```bash
+   yarn install
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Inicie o servidor de desenvolvimento:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   ```bash
+   yarn start
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   O aplicativo será aberto em [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Scripts Disponíveis
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `yarn start`: Inicia o servidor de desenvolvimento.
+- `yarn build`: Cria a versão de produção do aplicativo.
+- `yarn test`: Executa testes.
+- `yarn eject`: Eject do projeto para configuração personalizada.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Como Funciona
+
+1. **Dashboard:** Exibe as estações de armazenamento e permite ajustar o volume de cada uma.
+2. **Station:** Componente que representa uma estação única, com controle de slider para volume.
+3. **Coleta Automática:** Um pedido de coleta é gerado automaticamente quando o volume atinge 80%.
+4. **Confirmação e Redefinição:** Após confirmação da coleta, o volume é redefinido para 0%.
+
+## Tecnologias Utilizadas
+
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **TypeScript**: Superset de JavaScript que adiciona tipos e segurança.
+- **Material UI**: Biblioteca de componentes React para design moderno e responsivo.
+- **SweetAlerts 2**: Biblioteca para alertas e notificações visuais.
+
+## Feedback Visual
+
+Usamos `sweetalerts2` para fornecer feedback visual ao usuário sobre o status das operações (sucesso ou erro).
+
+## Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## Contato
+
+Para dúvidas ou sugestões, entre em contato via [email@exemplo.com](mailto:albsondev@outlook.com).
