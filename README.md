@@ -17,8 +17,8 @@ Este projeto é um sistema de controle de volume de armazenamento de resíduos d
 ## Estrutura do Projeto
 
 - `src/`
-  - `components/`: Contém componentes React como `Dashboard` e `Station`.
-  - `services/`: Contém lógica de interação com dados simulada por `stationService.ts`.
+  - `components/`: Contém componentes React como `ControlPanel` e `StationPanel`.
+  - `services/`: Contém lógica de interação com dados simulada por `storageService.ts`.
   - `types/`: Define tipos TypeScript para garantir robustez do código.
   - `App.tsx`: Componente raiz que integra todos os outros componentes.
   - `index.tsx`: Ponto de entrada do aplicativo.
