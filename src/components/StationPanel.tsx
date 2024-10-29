@@ -1,10 +1,12 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import LinearProgress from '@mui/material/LinearProgress';
 import Button from '@mui/material/Button';
 import { StationPanelProps } from '../types/stationPanel';
+import { Avatar, CardActions, CardHeader, IconButton, LinearProgress, Slider } from '@mui/material';
+import { red } from '@mui/material/colors';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 const StationPanel: React.FC<StationPanelProps> = ({
   station,
@@ -12,35 +14,50 @@ const StationPanel: React.FC<StationPanelProps> = ({
   onRequestCollection,
   onConfirmCollection,
 }) => {
-  const handleVolumeChangeLocal = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let newVolume = parseInt(event.target.value, 10);
-    if (isNaN(newVolume)) {
-      newVolume = 0;
-    }
-    if (newVolume < 0) {
-      newVolume = 0;
-    }
-    if (newVolume > 100) {
-      newVolume = 100;
-    }
-    onVolumeChange(newVolume);
+
+  const handleSliderChange = (
+    event: Event,
+    newValue: number | number[],
+  ) => {
+    onVolumeChange(newValue as number);
+  };
+
+  const valuetext = (value: number) => {
+    return `${value}%`;
   };
 
   return (
-    <Card>
+    <Card className="cards-panels" variant="outlined">
+      <CardHeader
+        className="panels-header"
+        avatar={
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+            {station.avatarLetter}
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title={station.name}
+        subheader={`Volume: ${station.volume}%`}
+      />
       <CardContent>
-        <Typography variant="h6" component="div">
-          {station.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          Volume: {station.volume}%
-        </Typography>
-        <input
-          type="range"
-          min="0"
-          max="100"
+        <Slider
+          aria-label="Volume"
+          min={0}
+          max={100}
+          step={1}
           value={station.volume}
-          onChange={handleVolumeChangeLocal}
+          onChange={handleSliderChange}
+          getAriaValueText={valuetext}
+          valueLabelDisplay="auto"
+          marks={[
+            { value: 0, label: '0%' },
+            { value: 50, label: '50%' },
+            { value: 100, label: '100%' },
+          ]}
         />
         <LinearProgress
           variant="determinate"
@@ -48,12 +65,14 @@ const StationPanel: React.FC<StationPanelProps> = ({
           sx={(theme) => ({
             height: 20,
             borderRadius: 5,
+            marginTop: theme.spacing(2),
             backgroundColor:
               station.volume >= 80
                 ? theme.palette.warning.light
                 : station.volume >= 50
                 ? theme.palette.secondary.light
                 : theme.palette.grey[200],
+            transition: 'background-color 0.5s ease',
             '& .MuiLinearProgress-bar': {
               borderRadius: 5,
               backgroundColor:
@@ -64,25 +83,31 @@ const StationPanel: React.FC<StationPanelProps> = ({
                   : theme.palette.primary.main,
             },
           })}
-        />
+          />
         {station.collectionRequested ? (
-          <Button
-            variant="contained"
-            color="success"
-            onClick={onConfirmCollection}
-            fullWidth
-          >
-            Confirmar Coleta
-          </Button>
+          <CardActions className='card-footer'>
+            <Button
+              variant="contained"
+              color="success"
+              className="btn-confirm"
+              onClick={onConfirmCollection}
+              fullWidth
+            >
+              Confirmar Coleta
+            </Button>
+          </CardActions>
         ) : (
-          <Button
-            variant="outlined"
-            color="warning"
-            onClick={onRequestCollection}
-            fullWidth
-          >
-            Solicitar Coleta
-          </Button>
+          <CardActions className='card-footer'>
+            <Button
+              variant="outlined"
+              color="warning"
+              onClick={onRequestCollection}
+              fullWidth
+              className="btn-request"
+            >
+              Solicitar Coleta
+            </Button>
+          </CardActions>
         )}
       </CardContent>
     </Card>

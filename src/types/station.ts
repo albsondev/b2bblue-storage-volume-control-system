@@ -4,5 +4,6 @@ export interface Station {
     volume: number;
     occupancy: number | undefined;
     collectionRequested: boolean;
+    avatarLetter: string;
   }
   

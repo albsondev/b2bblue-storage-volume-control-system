@@ -8,7 +8,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import StationPanel from './StationPanel';
 import CollectionRequestDialog from './CollectionRequestDialog';
 import * as stationService from '../services/stationService';
-import '../styles/StationControlPanel.css';
+import '../styles/StationControlPanel.scss';
 import { Station } from '../types/station';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -21,13 +21,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#42a5f5', // Azul Google
+      main: '#42a5f5',
     },
     secondary: {
-      main: '#66bb6a', // Verde Google
+      main: '#66bb6a',
     },
     warning: {
-      main: '#fdd835', // Amarelo Google
+      main: '#fdd835',
     },
   },
 });
@@ -108,7 +108,7 @@ const ControlPanel: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md" className="container">
-        <Typography variant="h4" component="h1" align="center" gutterBottom>
+        <Typography variant="h4" component="h1" align="center" className='title-page' gutterBottom>
           Painel de Controle de Volume
         </Typography>
         <Grid container spacing={3}>

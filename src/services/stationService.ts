@@ -1,9 +1,10 @@
 import { Station } from '../types/station';
 
 let stations: Station[] = [
-    { id: 1, name: 'Estação A', volume: 0, collectionRequested: false, occupancy: 0 },
-    { id: 2, name: 'Estação B', volume: 0, collectionRequested: false, occupancy: 0 },
-    { id: 3, name: 'Estação C', volume: 0, collectionRequested: false, occupancy: 0 },
+    { id: 1, name: 'Estação A', volume: 0, collectionRequested: false, occupancy: 0, avatarLetter: 'A'},
+    { id: 2, name: 'Estação B', volume: 0, collectionRequested: false, occupancy: 0, avatarLetter: 'B'},
+    { id: 3, name: 'Estação C', volume: 0, collectionRequested: false, occupancy: 0, avatarLetter: 'C'},
+
   ];
 
 export function getStations(): Station[] {
