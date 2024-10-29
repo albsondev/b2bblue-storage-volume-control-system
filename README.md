@@ -7,7 +7,7 @@ Este projeto é um sistema de controle de volume de armazenamento de resíduos d
 
 ## Visão Geral do Projeto
 
-- **Tecnologias Utilizadas:** React.js, TypeScript, Material UI, Axios e Sweetalert2
+- **Tecnologias Utilizadas:** React.js, TypeScript, Material UI, Axios e Dialog(Material UI)
 - **Funcionalidades:** 
   - Monitoramento do volume de armazenamento das estações
   - Geração automática de pedidos de coleta
@@ -70,7 +70,7 @@ Este projeto é um sistema de controle de volume de armazenamento de resíduos d
 - **React**: Biblioteca JavaScript para construção de interfaces de usuário.
 - **TypeScript**: Superset de JavaScript que adiciona tipos e segurança.
 - **Material UI**: Biblioteca de componentes React para design moderno e responsivo.
-- **SweetAlerts 2**: Biblioteca para alertas e notificações visuais.
+- **Dialog(Material UI)**: Biblioteca para alertas e notificações visuais.
 
 ## Feedback Visual
 
