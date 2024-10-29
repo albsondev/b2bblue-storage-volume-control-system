@@ -1,53 +1,145 @@
-import React, { useState } from 'react';
-import { Container, TextField } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import StationPanel from './StationPanel';
-import { Station } from '../types/index';
+import CollectionRequestDialog from './CollectionRequestDialog';
+import * as stationService from '../services/stationService';
+import '../styles/StationControlPanel.css';
+import { Station } from '../types/station';
 
-const initialStations: Station[] = [
-  { id: 1, occupancy: 0 },
-  { id: 2, occupancy: 0 },
-  { id: 3, occupancy: 0 },
-];
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#42a5f5', // Azul Google
+    },
+    secondary: {
+      main: '#66bb6a', // Verde Google
+    },
+    warning: {
+      main: '#fdd835', // Amarelo Google
+    },
+  },
+});
 
 const ControlPanel: React.FC = () => {
-  const [stations, setStations] = useState(initialStations);
+  const [stations, setStations] = useState<Station[]>(
+    stationService.getStations(),
+  );
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogStation, setDialogStation] = useState<Station | null>(null);
 
-  const handleChangeOccupancy = (id: number, value: number) => {
-    setStations((prev) =>
-      prev.map((station) => (station.id === id ? { ...station, occupancy: value } : station))
+  useEffect(() => {
+    const checkForCollectionRequests = () => {
+      stations.forEach((station) => {
+        if (station.volume >= 80 && !station.collectionRequested) {
+          setSnackbarMessage(
+            `Solicitação de coleta gerada para a estação ${station.name}`,
+          );
+          setOpenSnackbar(true);
+          stationService.requestCollection(station.id);
+          setStations((prevStations) =>
+            prevStations.map((s) =>
+              s.id === station.id
+                ? { ...s, collectionRequested: true }
+                : s,
+            ),
+          );
+        }
+      });
+    };
+
+    checkForCollectionRequests();
+    const intervalId = setInterval(checkForCollectionRequests, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [stations]);
+
+  const handleVolumeChange = (stationId: number, newVolume: number) => {
+    setStations((prevStations) =>
+      prevStations.map((station) =>
+        station.id === stationId
+          ? { ...station, volume: newVolume, occupancy: newVolume }
+          : station,
+      ),
     );
   };
 
-  const handleCollect = (id: number) => {
-    // Lógica para tratar o pedido de coleta
+  const handleRequestCollection = (station: Station) => {
+    setDialogStation(station);
+    setOpenDialog(true);
   };
 
-  const handleReset = (id: number) => {
-    setStations((prev) =>
-      prev.map((station) => (station.id === id ? { ...station, occupancy: 0 } : station))
+  const handleConfirmCollection = (stationId: number) => {
+    setOpenDialog(false);
+    stationService.confirmCollection(stationId);
+    setStations((prevStations) =>
+      prevStations.map((station) =>
+        station.id === stationId
+          ? { ...station, volume: 0, collectionRequested: false, occupancy: 0 }
+          : station,
+      ),
     );
+  };
+
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
   };
 
   return (
-    <Container>
-      {stations.map((station) => (
-        <div key={station.id}>
-          <TextField
-            type="number"
-            label={`Ocupação da Estação ${station.id}`}
-            value={station.occupancy}
-            onChange={(e) => handleChangeOccupancy(station.id, parseInt(e.target.value))}
-            inputProps={{ min: 0, max: 100 }}
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="md" className="container">
+        <Typography variant="h4" component="h1" align="center" gutterBottom>
+          Painel de Controle de Volume
+        </Typography>
+        <Grid container spacing={3}>
+          {stations.map((station) => (
+            <Grid item xs={12} sm={6} md={4} key={station.id}>
+              <StationPanel
+                station={station}
+                onVolumeChange={(newVolume) =>
+                  handleVolumeChange(station.id, newVolume)
+                }
+                onRequestCollection={() => handleRequestCollection(station)}
+                onConfirmCollection={() => handleConfirmCollection(station.id)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="warning" sx={{ width: '100%' }}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
+        {dialogStation && (
+          <CollectionRequestDialog
+            open={openDialog}
+            station={dialogStation}
+            onClose={() => setOpenDialog(false)}
+            onConfirm={() => handleConfirmCollection(dialogStation.id)}
           />
-          <StationPanel
-            stationId={station.id}
-            occupancy={station.occupancy}
-            onCollect={() => handleCollect(station.id)}
-            onReset={() => handleReset(station.id)}
-          />
-        </div>
-      ))}
-    </Container>
+        )}
+      </Container>
+    </ThemeProvider>
   );
 };
 

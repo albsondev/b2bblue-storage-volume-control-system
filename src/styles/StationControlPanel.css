@@ -1,0 +1,9 @@
+.container {
+    padding-top: 20px; /* Espaçamento superior para o conteúdo */
+    display: flex; /* Para centralizar verticalmente */
+    flex-direction: column; /* Itens dispostos em coluna */
+    min-height: 100vh; /* Ocupa toda a altura da tela */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+  }
+  
